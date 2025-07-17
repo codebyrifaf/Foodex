@@ -1,5 +1,5 @@
 import { CreateUserParams, SignInParams } from "@/type";
-import { Account, Avatars, Client, Databases, ID, Query } from "react-native-appwrite"
+import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite"
 
 
 
@@ -8,7 +8,12 @@ export const appwriteConfig = {
   projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
   platform: "com.rifaf.foodex",
   databaseId: '6878c419000ac2470ac8',
+  bucketId:'6879508f001ff0388625',
   userCollectionId: '6878c45f003a0c22b3c7',
+  categoriesCollectionId:'687949e6000ee868f9b3',
+  menuCollectionId: '68794ad1002011676c31',
+  customizationsCollectionId:'68794e49002ba799c5e0',
+  menuCustomizationsCollectionId: '68794fa800086d9aa3de',
 }
 
 
@@ -21,6 +26,7 @@ client
 
 export const account = new Account(client);
 export const databases = new Databases(client);
+export const storage = new Storage(client);
 const avatars = new Avatars(client);
 
 export const createUser = async ({ email, password, name }: CreateUserParams) => {
