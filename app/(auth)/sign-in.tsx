@@ -4,6 +4,7 @@ import { Link, router } from "expo-router";
 import { useState } from 'react';
 import { Alert, Text, View } from 'react-native';
 import { signIn } from '@/lib/appwrite'; // Ensure this function is defined in your appwrite.ts
+import * as Sentry from '@sentry/react-native'; // Import Sentry for error tracking
 
 const SignIn = () => {
 
@@ -22,6 +23,7 @@ const SignIn = () => {
       router.replace('/');
     } catch (error: any) {
       Alert.alert('Error', error.message);
+      Sentry.captureEvent(error);
     } finally {
       setIsSubmitting(false);
     }
