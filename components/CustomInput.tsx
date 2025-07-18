@@ -1,7 +1,7 @@
-import { CustomInputProps } from '@/type'
-import { useState, useRef } from 'react';
-import { View, Text, TextInput, Animated } from 'react-native'
+import { CustomInputProps } from '@/type';
 import cn from 'clsx';
+import { useRef, useState } from 'react';
+import { Animated, Text, TextInput, View } from 'react-native';
 
 const CustomInput = ({
     placeholder = 'Enter text',

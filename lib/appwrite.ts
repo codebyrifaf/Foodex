@@ -1,4 +1,4 @@
-import { CreateUserParams, GetMenuParams, SignInParams } from "@/type";
+import { CreateUserParams, GetMenuParams, SignInParams, UpdateUserParams } from "@/type";
 import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
 
 
@@ -94,6 +94,22 @@ export const getCurrentUser = async () => {
     return currentUser.documents[0];
   } catch (e) {
     console.log(e);
+    throw new Error(e as string);
+  }
+};
+
+export const updateUser = async (userId: string, updateData: UpdateUserParams) => {
+  try {
+    const updatedUser = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      userId,
+      updateData
+    );
+    
+    return updatedUser;
+  } catch (e) {
+    console.log('Update user error:', e);
     throw new Error(e as string);
   }
 };

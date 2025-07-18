@@ -101,6 +101,12 @@ interface CreateUserParams {
     address: string;
 }
 
+interface UpdateUserParams {
+    name?: string;
+    phone?: string;
+    address?: string;
+}
+
 interface SignInParams {
     email: string;
     password: string;

@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Animated } from 'react-native'
 import React, { useRef } from 'react'
+import { ActivityIndicator, Animated, Text, TouchableOpacity, View } from 'react-native'
 
-import cn from 'clsx'
 import { CustomButtonProps } from '@/type'
+import cn from 'clsx'
 
 const CustomButton = ({
   onPress,
@@ -38,9 +38,10 @@ const CustomButton = ({
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         activeOpacity={0.8}
+        style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
       >
         {leftIcon}
-        <View className="flex-center flex-row">
+        <View className="flex-1 items-center justify-center">
           {isLoading ? (
             <ActivityIndicator size="small" color="white" />
           ) : (

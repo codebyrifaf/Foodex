@@ -4,8 +4,8 @@ import { signIn } from '@/lib/appwrite';
 import useAuthStore from '@/store/auth.store';
 import * as Sentry from '@sentry/react-native';
 import { Link, router } from "expo-router";
-import { useState, useEffect, useRef } from 'react';
-import { Alert, Text, View, Animated, Dimensions } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, Animated, Text, View } from 'react-native';
 
 const SignIn = () => {
   const { fetchAuthenticatedUser } = useAuthStore();

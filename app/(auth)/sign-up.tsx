@@ -3,8 +3,8 @@ import CustomInput from '@/components/CustomInput';
 import { createUser } from '@/lib/appwrite';
 import useAuthStore from '@/store/auth.store';
 import { Link, router } from "expo-router";
-import { useState, useEffect, useRef } from 'react';
-import { Alert, Text, View, Animated } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, Animated, Text, View } from 'react-native';
 
 const SignUp = () => {
   const { fetchAuthenticatedUser } = useAuthStore();

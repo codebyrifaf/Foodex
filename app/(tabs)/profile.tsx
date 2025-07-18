@@ -3,8 +3,8 @@ import { images } from '@/constants'
 import { signOut } from '@/lib/appwrite'
 import useAuthStore from '@/store/auth.store'
 import { router } from 'expo-router'
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View, Animated, Dimensions } from 'react-native'
 import { useEffect, useRef } from 'react'
+import { Animated, Dimensions, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
 const { width: screenWidth } = Dimensions.get('window')
 
@@ -91,8 +91,7 @@ const Profile = () => {
   }
 
   const handleEditProfile = () => {
-    // TODO: Implement edit profile functionality
-    console.log('Edit profile pressed')
+    router.push('/edit-profile')
   }
 
   return (
@@ -109,14 +108,7 @@ const Profile = () => {
           <View className="absolute -bottom-5 -left-5 w-20 h-20 bg-white/10 rounded-full" />
           
           <View className="flex-row items-center justify-between px-6 mb-8">
-            <TouchableOpacity onPress={() => router.back()} className="w-10 h-10 bg-white/20 rounded-full items-center justify-center">
-              <Image 
-                source={images.arrowBack} 
-                className="w-5 h-5" 
-                resizeMode="contain" 
-                tintColor="white"
-              />
-            </TouchableOpacity>
+            <View className="w-10 h-10" />
             <Text className="text-xl font-bold text-white">My Profile</Text>
             <TouchableOpacity className="w-10 h-10 bg-white/20 rounded-full items-center justify-center">
               <Image 
