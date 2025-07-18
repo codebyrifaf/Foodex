@@ -1,5 +1,5 @@
 import { CreateUserParams, GetMenuParams, SignInParams } from "@/type";
-import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite"
+import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
 
 
 
@@ -79,6 +79,28 @@ export const getCurrentUser = async () => {
   }
 };
 
+// Map menu item names to local image keys
+const getLocalImageKey = (itemName: string): string => {
+  const imageMap: { [key: string]: string } = {
+    'Classic Cheeseburger': 'classicCheeseburger',
+    'Pepperoni Pizza': 'pepperoniPizza',
+    'Bean Burrito': 'beanBurrito',
+    'BBQ Bacon Burger': 'bbqBaconBurger',
+    'Chicken Caesar Wrap': 'chickenCaesarWrap',
+    'Grilled Veggie Sandwich': 'grilledVeggieSandwich',
+    'Double Patty Burger': 'doublePattyBurger',
+    'Paneer Tikka Wrap': 'paneerTikkaWrap',
+    'Mexican Burrito Bowl': 'mexicanBurritoBowl',
+    'Spicy Chicken Sandwich': 'spicyChickenSandwich',
+    'Classic Margherita Pizza': 'classicMargheritaPizza',
+    'Protein Power Bowl': 'proteinPowerBowl',
+    'Paneer Burrito': 'paneerBurrito',
+    'Chicken Club Sandwich': 'chickenClubSandwich',
+  };
+  
+  return imageMap[itemName] || 'logo'; // fallback to logo if not found
+};
+
 export const getMenu = async ({ category, query }: GetMenuParams) => {
   try {
     const queries: string[] = [];
@@ -92,12 +114,41 @@ export const getMenu = async ({ category, query }: GetMenuParams) => {
       queries
     );
 
-    return menus.documents;
+    // If database is empty, return dummy data for testing
+    if (menus.documents.length === 0) {
+      const dummyData = require('./data').default;
+      let filteredMenu: any[] = dummyData.menu;
+      
+      // Apply category filter
+      if (category && category !== 'all') {
+        filteredMenu = filteredMenu.filter((item: any) => 
+          item.category_name.toLowerCase() === category.toLowerCase()
+        );
+      }
+      
+      // Apply search query
+      if (query) {
+        filteredMenu = filteredMenu.filter((item: any) =>
+          item.name.toLowerCase().includes(query.toLowerCase())
+        );
+      }
+      
+      // Add required $id field for dummy data
+      return filteredMenu.map((item: any, index: number) => ({
+        ...item,
+        $id: `dummy-${index}`,
+      }));
+    }
+
+    // Hybrid approach: Use database data but map to local images
+    return menus.documents.map((item: any) => ({
+      ...item,
+      image_url: getLocalImageKey(item.name), // Replace database image URL with local key
+    }));
+    
   } catch (e) {
     throw new Error(e as string);
   }
-
-
 }
 
 export const getCategories = async () => {
@@ -106,6 +157,17 @@ export const getCategories = async () => {
       appwriteConfig.databaseId,
       appwriteConfig.categoriesCollectionId
     );
+
+    // If database is empty, return dummy categories
+    if (categories.documents.length === 0) {
+      const dummyData = require('./data').default;
+      return dummyData.categories.map((category: any, index: number) => ({
+        ...category,
+        $id: `category-${index}`,
+      }));
+    }
+
+    return categories.documents;
   } catch (e) {
     throw new Error(e as string);
   }

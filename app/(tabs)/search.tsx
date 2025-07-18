@@ -8,10 +8,8 @@ import CartButton from "@/components/CartButton";
 import cn from "clsx";
 import MenuCard from "@/components/MenuCard";
 import {MenuItem} from "@/type";
-import { SearchBar } from 'react-native-screens';
-
 import Filter from "@/components/Filter";
-//import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/SearchBar";
 
 const Search = () => {
     const { category, query } = useLocalSearchParams<{query: string; category: string}>()

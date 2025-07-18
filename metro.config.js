@@ -5,4 +5,4 @@ const {
  
 const config = getSentryExpoConfig(__dirname)
  
-module.exports = withNativeWind(config, { input: './app/global.css' })
+module.exports = withNativeWind(config, { input: './app/global.css' });

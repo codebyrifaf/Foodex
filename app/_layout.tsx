@@ -50,3 +50,5 @@ if(!fontsLoaded || isLoading) {
 
   return <Stack screenOptions={{ headerShown: false}} />;
 });
+
+Sentry.showFeedbackWidget();

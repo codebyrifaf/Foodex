@@ -1,3 +1,4 @@
+import arrowBack from "@/assets/icons/arrow-back.png";
 import arrowDown from "@/assets/icons/arrow-down.png";
 import arrowRight from "@/assets/icons/arrow-right.png";
 import bag from "@/assets/icons/bag.png";
@@ -17,7 +18,6 @@ import search from "@/assets/icons/search.png";
 import star from "@/assets/icons/star.png";
 import trash from "@/assets/icons/trash.png";
 import user from "@/assets/icons/user.png";
-import arrowBack from "../assets/icons/arrow-back.png";
 
 import avatar from "@/assets/images/avatar.png";
 import avocado from "@/assets/images/avocado.png";
@@ -40,6 +40,22 @@ import pizzaOne from "@/assets/images/pizza-one.png";
 import salad from "@/assets/images/salad.png";
 import success from "@/assets/images/success.png";
 import tomatoes from "@/assets/images/tomatoes.png";
+
+// Menu item images
+import bbqBaconBurger from "@/assets/images/bbq-bacon-burger.png";
+import beanBurrito from "@/assets/images/bean-burrito.png";
+import chickenCaesarWrap from "@/assets/images/chicken-caesar-wrap.png";
+import chickenClubSandwich from "@/assets/images/chicken-club-sandwich.png";
+import classicCheeseburger from "@/assets/images/classic-cheeseburger.png";
+import classicMargheritaPizza from "@/assets/images/classic-margherita-pizza.png";
+import doublePattyBurger from "@/assets/images/double-patty-burger.png";
+import grilledVeggieSandwich from "@/assets/images/grilled-veggie-sandwich.png";
+import mexicanBurritoBowl from "@/assets/images/mexican-burrito-bowl.png";
+import paneerBurrito from "@/assets/images/paneer-burrito.png";
+import paneerTikkaWrap from "@/assets/images/paneer-tikka-wrap.png";
+import pepperoniPizza from "@/assets/images/pepperoni-pizza.png";
+import proteinPowerBowl from "@/assets/images/protein-power-bowl.png";
+import spicyChickenSandwich from "@/assets/images/spicy-chicken-sandwich.png";
 
 export const CATEGORIES = [
     {
@@ -199,4 +215,19 @@ export const images = {
     star,
     trash,
     user,
+    // Menu item images
+    classicCheeseburger,
+    pepperoniPizza,
+    beanBurrito,
+    bbqBaconBurger,
+    chickenCaesarWrap,
+    grilledVeggieSandwich,
+    doublePattyBurger,
+    paneerTikkaWrap,
+    mexicanBurritoBowl,
+    spicyChickenSandwich,
+    classicMargheritaPizza,
+    proteinPowerBowl,
+    paneerBurrito,
+    chickenClubSandwich,
 };
