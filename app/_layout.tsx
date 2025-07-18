@@ -1,9 +1,11 @@
-import { SplashScreen, Stack } from "expo-router";
-import './global.css';
-import { useFonts} from "expo-font";
-import { use, useEffect } from "react";
-import * as Sentry from '@sentry/react-native';
+import VideoSplashScreen from "@/components/VideoSplashScreen";
 import useAuthStore from "@/store/auth.store";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Sentry from '@sentry/react-native';
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import { useEffect, useState } from "react";
+import './global.css';
 
 
 Sentry.init({
@@ -24,6 +26,8 @@ Sentry.init({
 
 export default Sentry.wrap(function RootLayout() {
   const {isLoading, fetchAuthenticatedUser} = useAuthStore();
+  const [showVideoSplash, setShowVideoSplash] = useState(true);
+  const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);
 
   const[fontsLoaded, error] = useFonts({
     "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
@@ -33,20 +37,50 @@ export default Sentry.wrap(function RootLayout() {
     "Quicksand-Light": require("../assets/fonts/Quicksand-Light.ttf"),
   });
 
-useEffect(() => {
+  useEffect(() => {
     if(error) throw error;
-    if(fontsLoaded) SplashScreen.hideAsync();
-}, [fontsLoaded, error]);
+    // Don't hide splash screen here anymore, let video component handle it
+  }, [fontsLoaded, error]);
 
+  useEffect(() => {
+    fetchAuthenticatedUser()
+  },[]);
 
-useEffect(() => {
-  fetchAuthenticatedUser()
-},[]);
+  // Check if this is first launch
+  useEffect(() => {
+    const checkFirstLaunch = async () => {
+      try {
+        const hasLaunchedBefore = await AsyncStorage.getItem('hasLaunchedBefore');
+        if (hasLaunchedBefore === null) {
+          // First launch
+          setIsFirstLaunch(true);
+          await AsyncStorage.setItem('hasLaunchedBefore', 'true');
+        } else {
+          // Not first launch - you can choose to still show video by setting this to true
+          setIsFirstLaunch(true); // Change to false if you want video only on first launch
+        }
+      } catch (error) {
+        console.log('Error checking first launch:', error);
+        setIsFirstLaunch(true); // Default to showing video
+      }
+    };
 
-if(!fontsLoaded || isLoading) {
-    return null; // or a loading spinner
+    checkFirstLaunch();
+  }, []);
+
+  // Show video splash screen if it's first launch (or every time based on your preference)
+  if (showVideoSplash && isFirstLaunch && fontsLoaded) {
+    return (
+      <VideoSplashScreen 
+        onFinish={() => setShowVideoSplash(false)} 
+      />
+    );
   }
 
+  // Show loading state while fonts are loading or auth is being checked or first launch status is unknown
+  if(!fontsLoaded || isLoading || isFirstLaunch === null) {
+    return null; // or a loading spinner
+  }
 
   return <Stack screenOptions={{ headerShown: false}} />;
 });

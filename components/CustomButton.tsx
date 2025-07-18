@@ -45,7 +45,7 @@ const CustomButton = ({
           {isLoading ? (
             <ActivityIndicator size="small" color="white" />
           ) : (
-            <Text className={cn('text-white-100 paragraph-semibold', textStyle)}>{title}</Text>
+            <Text className={cn('paragraph-semibold', textStyle || 'text-white-100')}>{title}</Text>
           )}
         </View>
       </TouchableOpacity>
