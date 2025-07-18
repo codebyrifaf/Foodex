@@ -1,17 +1,20 @@
+import { images } from "@/constants";
 import { useCartStore } from "@/store/cart.store";
 import { CartItemType } from "@/type";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import {images} from "@/constants";
 
 const CartItem = ({ item }: { item: CartItemType }) => {
     const { increaseQty, decreaseQty, removeItem } = useCartStore();
+    
+    // Use local image from constants instead of external URL
+    const imageSource = images[item.image_url as keyof typeof images] || images.logo;
 
     return (
         <View className="cart-item">
             <View className="flex flex-row items-center gap-x-3">
                 <View className="cart-item__image">
                     <Image
-                        source={{ uri: item.image_url }}
+                        source={imageSource}
                         className="size-4/5 rounded-lg"
                         resizeMode="cover"
                     />

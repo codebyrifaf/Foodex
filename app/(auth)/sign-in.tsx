@@ -1,13 +1,14 @@
 import CustomButton from '@/components/CustomButton';
 import CustomInput from '@/components/CustomInput';
+import { signIn } from '@/lib/appwrite';
+import useAuthStore from '@/store/auth.store';
+import * as Sentry from '@sentry/react-native';
 import { Link, router } from "expo-router";
 import { useState } from 'react';
 import { Alert, Text, View } from 'react-native';
-import { signIn } from '@/lib/appwrite'; // Ensure this function is defined in your appwrite.ts
-import * as Sentry from '@sentry/react-native'; // Import Sentry for error tracking
 
 const SignIn = () => {
-
+  const { fetchAuthenticatedUser } = useAuthStore();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ email: '', password: '' });
@@ -19,7 +20,10 @@ const SignIn = () => {
 
     try {
       await signIn({ email, password });
-
+      
+      // After successful sign-in, fetch the user data and update auth state
+      await fetchAuthenticatedUser();
+      
       router.replace('/');
     } catch (error: any) {
       Alert.alert('Error', error.message);

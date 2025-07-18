@@ -29,7 +29,7 @@ export const databases = new Databases(client);
 export const storage = new Storage(client);
 const avatars = new Avatars(client);
 
-export const createUser = async ({ email, password, name }: CreateUserParams) => {
+export const createUser = async ({ email, password, name, phone, address }: CreateUserParams) => {
   try {
     const newAccount = await account.create(ID.unique(), email, password, name);
     if (!newAccount) throw Error;
@@ -41,7 +41,7 @@ export const createUser = async ({ email, password, name }: CreateUserParams) =>
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
       ID.unique(),
-      { email, name, accountId: newAccount.$id, avatar: avatarUrl }
+      { email, name, phone, address, accountId: newAccount.$id, avatar: avatarUrl }
     );
 
 
@@ -52,8 +52,27 @@ export const createUser = async ({ email, password, name }: CreateUserParams) =>
 
 export const signIn = async ({ email, password }: SignInParams) => {
   try {
+    // Check if there's already an active session
+    try {
+      const currentSession = await account.get();
+      if (currentSession) {
+        // If there's already a session, delete it first
+        await account.deleteSession('current');
+      }
+    } catch (error) {
+      // No active session, which is fine
+    }
+
     const session = await account.createEmailPasswordSession(email, password);
     return session;
+  } catch (e) {
+    throw new Error(e as string);
+  }
+}
+
+export const signOut = async () => {
+  try {
+    await account.deleteSession('current');
   } catch (e) {
     throw new Error(e as string);
   }

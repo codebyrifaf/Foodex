@@ -1,5 +1,5 @@
-import { Models } from "react-native-appwrite";
 import { ImageSourcePropType } from "react-native";
+import { Models } from "react-native-appwrite";
 
 export interface MenuItem extends Models.Document {
     name: string;
@@ -21,6 +21,8 @@ export interface User extends Models.Document {
     name: string;
     email: string;
     avatar: string;
+    phone?: string;
+    address?: string;
 }
 
 export interface CartCustomization {
@@ -95,6 +97,8 @@ interface CreateUserParams {
     email: string;
     password: string;
     name: string;
+    phone: string;
+    address: string;
 }
 
 interface SignInParams {
